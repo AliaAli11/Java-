@@ -1,0 +1,143 @@
+package cafemanagementsystem;
+
+import java.util.Scanner;
+
+public class CafeManagementSystem {
+    protected String username;
+    protected String password;
+
+    public void register() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter a username: ");
+        this.username = input.nextLine();
+
+        boolean validPass = false;
+        while (!validPass) {
+            System.out.print("Enter a password :");
+            this.password = input.nextLine();
+            validPass = validation(this.password);
+
+            if (!validPass) {
+                System.out.println("Invalid Password!! try again.");
+            }
+        }
+
+        System.out.println("Successful pasword.....");
+    }
+
+     public boolean login() {
+    Scanner input = new Scanner(System.in);
+    int count = 5;
+
+    while (count > 0) {
+        System.out.print("Login page: ");
+
+        System.out.print("Enter username: ");
+        String inputUsername = input.nextLine();
+
+        System.out.print("Enter password: ");
+        String inputPassword = input.nextLine();
+
+        if (inputUsername.equals(this.username) && inputPassword.equals(this.password)) {
+        System.out.println("Successful log in...");
+            return true;
+        } else {
+            count--;
+        }
+    }
+
+    System.out.println("Too many failed attempts. Exiting.....");
+    return false;
+}
+
+    private boolean validation(String password) {
+        int upCaseCount = 0;
+        int lCaseCount = 0;
+        int dCount = 0;
+        int specialCharCount = 0;
+
+        if (password.length() < 8) {
+            return false;
+        }
+        for (int i = 0; i < password.length(); i++) {
+            char ch = password.charAt(i);
+
+            if (Character.isUpperCase(ch)) {
+                upCaseCount++;
+            } else if (Character.isLowerCase(ch)) {
+                lCaseCount++;
+            } else if (Character.isDigit(ch)) {
+                dCount++;
+            } else if (!Character.isLetterOrDigit(ch)) {
+                specialCharCount++;
+            }
+        }
+
+        if (upCaseCount == 0) {
+            return false;
+        }
+        if (lCaseCount == 0) {
+            return false;
+        }
+        if (dCount == 0) {
+            return false;
+        }
+        if (specialCharCount == 0) {
+            return false;
+        }
+
+        return true;
+    }
+   
+
+
+    public void logout() {
+        System.out.println("Logged out successfully.");
+    }
+
+    public static void main(String[] args) {
+        CafeManagementSystem system = new CafeManagementSystem();
+        Scanner input = new Scanner(System.in);
+        System.out.println("----- Welcome to the Cafe Management System ------");
+        system.register();
+
+         if (system.login()) {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n******Main Menu *****");
+            System.out.println("1. Manage Loyalty Points");
+            System.out.println("2. Manage Menu");
+            System.out.println("3. Manage Orders");
+            System.out.println("4. View/Place Orders");
+            System.out.println("5. Generate Bill");
+            System.out.println("6. Logout");
+            System.out.print("Choose an option: ");
+
+            String choice = input.nextLine();
+            switch (choice) {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    system.logout();
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    } else {
+        System.out.println("Exiting system.");
+    }
+
+    input.close();}
+
+}
